@@ -5,12 +5,24 @@ from tkmacosx import Button
 
 okno = Tk()
 okno.title("Lubošova knihovna")
-okno.minsize(width=350,height=350)
+okno.minsize(width=700,height=350)
 okno.geometry("700x350+800+-400")
 okno.resizable(True,True)
 
 #-----------Funkce------------
-def close()
+def close_app():
+    exit()
+
+
+def pridat_polozku():
+    text_box.insert(0,user_input.get())
+    user_input.delete(0,END)
+
+def vymazat_polozku():
+    text_box.delete(ANCHOR)
+
+def vymazat_vse():
+    text_box.delete(0,END)
 
 #------------Stylizace-------
 
@@ -34,27 +46,34 @@ cudlik_frame.pack()
 
 
 #input frame - obsah
-user_input = Entry(vstup_frame,width=20,borderwidth=1,font=main_font)
+user_input = Entry(vstup_frame,width=83,borderwidth=1,font=main_font,cursor="pencil")
 user_input.grid(row=0,column=0)
-pridat_cudlik=Button(vstup_frame,text="Přidat",font=("Arial",12),bg=button_color)
-pridat_cudlik.grid(row=0,column=1)
+
+pridat_cudlik=Button(vstup_frame,text="Přidat",font=("Arial",12),bg=button_color,command=pridat_polozku)
+pridat_cudlik.grid(row=0,column=1,pady=6,padx=6)
+
+
+
 
 #text frame - obsah
-text_box = Listbox(text_frame,height=17,width=100,borderwidth=1,font=main_font)
+text_box = Listbox(text_frame,height=17,width=100, font=main_font,cursor="pencil")
 text_box.grid()
 
-#Button frame - obsah
-remove_button = Button(cudlik_frame,text="Smazat položku",font=main_font,bg=button_color)
-remove_button.grid(row=0,column=0)
 
-remove_all_button = Button(cudlik_frame,text="Smazat vše",font=main_font,bg=button_color)
-remove_all_button.grid(row=0,column=1)
+
+
+#Button frame - obsah
+remove_button = Button(cudlik_frame,text="Smazat položku",font=main_font,bg=button_color,command=vymazat_polozku)
+remove_button.grid(row=0,column=0,pady=6,padx=27)
+
+remove_all_button = Button(cudlik_frame,text="Smazat vše",font=main_font,bg=button_color,activebackground="red",activeforeground="black",command=vymazat_vse)
+remove_all_button.grid(row=0,column=1,pady=6,padx=27)
 
 save_button = Button(cudlik_frame,text="Uložit seznam",font=main_font,bg=button_color)
-save_button.grid(row=0,column=2)
+save_button.grid(row=0,column=2,pady=6,padx=27)
 
 
-exit_button = Button(cudlik_frame,text="Konec aplikace",font=main_font,bg=button_color,command=)
-exit_button.grid(row=0,column=3)
+exit_button = Button(cudlik_frame,text="Konec aplikace",font=main_font,bg=button_color,command=close_app,activebackground="red",activeforeground="black")
+exit_button.grid(row=0,column=3,pady=6,padx=27)
 #------------Spouštěč--------
 okno.mainloop()
