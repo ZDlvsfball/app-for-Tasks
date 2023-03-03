@@ -4,7 +4,7 @@ from tkmacosx import Button
 #-----------OKNO-----------
 
 okno = Tk()
-okno.title("Lubošova knihovna")
+okno.title("Úkolovník")
 okno.minsize(width=700,height=350)
 okno.geometry("700x350+800+-400")
 okno.resizable(True,True)
@@ -19,10 +19,27 @@ def pridat_polozku():
     user_input.delete(0,END)
 
 def vymazat_polozku():
-    text_box.delete(ANCHOR)
+    with open("ukoly.txt","w") as file:
+        text_box.delete(ANCHOR)
 
 def vymazat_vse():
     text_box.delete(0,END)
+    with open("ukoly.txt","w") as file:
+        delete_app = text_box.delete(0,END)
+
+def nacti_data():
+    try:
+        with open("ukoly.txt","r") as file:
+            for one_line in file:
+                text_box.insert(END,one_line)
+    except:
+        print("Chyba funkce")
+def ulozit_seznam():
+    with open("ukoly.txt","w") as file:
+        save_app = text_box.get(0,END)
+        for one_save in save_app:
+            file.write(f"{one_save}\n")
+
 
 #------------Stylizace-------
 
@@ -69,11 +86,12 @@ remove_button.grid(row=0,column=0,pady=6,padx=27)
 remove_all_button = Button(cudlik_frame,text="Smazat vše",font=main_font,bg=button_color,activebackground="red",activeforeground="black",command=vymazat_vse)
 remove_all_button.grid(row=0,column=1,pady=6,padx=27)
 
-save_button = Button(cudlik_frame,text="Uložit seznam",font=main_font,bg=button_color)
+save_button = Button(cudlik_frame,text="Uložit seznam",font=main_font,bg=button_color,command=ulozit_seznam)
 save_button.grid(row=0,column=2,pady=6,padx=27)
 
 
 exit_button = Button(cudlik_frame,text="Konec aplikace",font=main_font,bg=button_color,command=close_app,activebackground="red",activeforeground="black")
 exit_button.grid(row=0,column=3,pady=6,padx=27)
 #------------Spouštěč--------
+nacti_data()
 okno.mainloop()
