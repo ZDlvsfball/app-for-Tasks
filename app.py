@@ -38,7 +38,10 @@ def ulozit_seznam():
     with open("ukoly.txt","w") as file:
         save_app = text_box.get(0,END)
         for one_save in save_app:
-            file.write(f"{one_save}\n")
+            if one_save.endswith("\n"):
+                file.write(f"{one_save}")
+            else:
+                file.write(f"{one_save}\n")
 
 
 #------------Stylizace-------
