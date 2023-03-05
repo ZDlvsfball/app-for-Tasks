@@ -3,6 +3,7 @@ from tkinter import *
 import customtkinter
 from tkmacosx import Button
 from customtkinter import *
+from termcolor import colored
 
 #-----------OKNO-----------
 
@@ -13,12 +14,19 @@ okno.geometry("750x350+800+-420")
 okno.resizable(True,True)
 
 #-----------Funkce------------
+
+
 def close_app():
     exit()
 
 
 def pridat_polozku():
-    text_box.insert(0,user_input.get())
+    pocet = text_box.size() + 1
+    
+
+    ui = f"{pocet}: {user_input.get()}"
+    text_box.insert(0,ui)
+
     user_input.delete(0,END)
 
 def vymazat_polozku():
@@ -42,9 +50,11 @@ def ulozit_seznam():
         save_app = text_box.get(0,END)
         for one_save in save_app:
             if one_save.endswith("\n"):
-                file.write(f"{one_save}")
+                file.write(f" {one_save}")
             else:
-                file.write(f"{one_save}\n")
+                file.write(f" {one_save}\n")
+
+
 
 
 #------------Stylizace-------
@@ -59,7 +69,7 @@ okno.configure(fg_color="#1f2e2e")
 
 #-------------Frames----------
 vstup_frame = customtkinter.CTkFrame(okno,width=20,fg_color="#1f2e2e")
-text_frame = customtkinter.CTkFrame(okno,fg_color="#1f2e2e")
+text_frame = customtkinter.CTkFrame(okno)
 cudlik_frame = customtkinter.CTkFrame(okno,fg_color="#1f2e2e")
 vstup_frame.pack()
 text_frame.pack()
@@ -67,7 +77,7 @@ cudlik_frame.pack()
 
 
 #input frame - obsah
-user_input = customtkinter.CTkEntry(vstup_frame,width=83,placeholder_text="text...")
+user_input = customtkinter.CTkEntry(vstup_frame,width=200,placeholder_text="text...",fg_color="#8cd9b3")
 user_input.grid(row=0,column=0)
 
 pridat_cudlik=customtkinter.CTkButton(vstup_frame,text="Přidat",font=("Arial",12),command=pridat_polozku)
@@ -76,8 +86,10 @@ pridat_cudlik.grid(row=0,column=1,pady=6,padx=6)
 
 
 
+
+
 #text frame - obsah
-text_box = Listbox(text_frame,height=17,width=70,cursor="pencil")
+text_box = Listbox(text_frame,height=17,width=70,cursor="pencil",borderwidth=3,bg="#8cd9b3")
 text_box.grid()
 
 
